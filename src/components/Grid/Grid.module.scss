@@ -1,0 +1,69 @@
+$Grid-columns: 12;
+
+$Grid-xs: 0px; //0-599
+$Grid-sm: 600px; //600-904
+$Grid-md: 905px; //905-1239
+$Grid-lg: 1240px; //1240-1439
+$Grid-xl: 1440px; //1440+
+
+@mixin spacing($isContainer: false) {
+  @if $isContainer {
+    margin: calc(var(--Grid-rowSpacing) / -2) calc(var(--Grid-columnSpacing) / -2);
+  } @else {
+    padding: calc(var(--Grid-rowSpacing) / 2) calc(var(--Grid-columnSpacing) / 2);
+  }
+}
+
+@mixin mediaQuery($breakPoint, $columns) {
+  @media only screen and (min-width: $breakPoint) {
+    width: calc(100% * $columns / $Grid-columns);
+  }
+}
+
+.container {
+  flex-flow: row wrap;
+  min-width: 0;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: var(--justifyContent);
+  align-items: var(--alignItems);
+  flex-direction: var(--flexDirection);
+
+  @include spacing(true);
+
+  > div.item {
+    flex-grow: 0;
+    flex-basis: auto;
+    min-width: 0;
+    box-sizing: border-box;
+
+    @include spacing(false);
+  }
+}
+
+@for $i from 1 through 12 {
+  .xs-#{$i} {
+    @include mediaQuery($Grid-xs, $i);
+  }
+}
+
+@for $i from 1 through 12 {
+  .sm-#{$i} {
+    @include mediaQuery($Grid-sm, $i);
+  }
+}
+@for $i from 1 through 12 {
+  .md-#{$i} {
+    @include mediaQuery($Grid-md, $i);
+  }
+}
+@for $i from 1 through 12 {
+  .lg-#{$i} {
+    @include mediaQuery($Grid-lg, $i);
+  }
+}
+@for $i from 1 through 12 {
+  .xl-#{$i} {
+    @include mediaQuery($Grid-xl, $i);
+  }
+}
